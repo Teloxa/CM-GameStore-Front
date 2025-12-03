@@ -41,38 +41,42 @@
       <!-- Opciones -->
       <div class="d-flex">
         <div class="d-flex" style="padding-top: 24px; padding-left: 20px; font-size: 14px; color: #595959; font-weight: 500;">
-          <p style="margin-right: 10px;">Gen IA</p>
+          <p style="margin-right: 10px;">Novedades</p>
           <p class="mdi mdi-chevron-down"></p>
         </div>
         <div class="d-flex" style="padding-top: 24px; padding-left: 15px; font-size: 14px; color: #595959; font-weight: 500;">
-          <p style="margin-right: 10px;">Plantillas de video</p>
+          <p style="margin-right: 10px;">GOtY's</p>
           <p class="mdi mdi-chevron-down"></p>
         </div>
         <div class="d-flex" style="padding-top: 24px; padding-left: 20px; font-size: 14px; color: #595959; font-weight: 500;">
-          <p style="margin-right: 10px;">Videos de Stock</p>
+          <p style="margin-right: 10px;">Steam</p>
           <p class="mdi mdi-chevron-down"></p>
         </div>
         <div class="d-flex" style="padding-top: 24px; padding-left: 15px; font-size: 14px; color: #595959; font-weight: 500;">
-          <p style="margin-right: 10px;">Audio</p>
+          <p style="margin-right: 10px;">Xbox</p>
           <p class="mdi mdi-chevron-down"></p>
         </div>
         <div class="d-flex" style="padding-top: 24px; padding-left: 15px; font-size: 14px; color: #595959; font-weight: 500;">
-          <p style="margin-right: 10px;">Gráficos </p>
+          <p style="margin-right: 10px;">PS</p>
           <p class="mdi mdi-chevron-down"></p>
         </div>
         <div class="d-flex" style="padding-top: 24px; padding-left: 15px; font-size: 14px; color: #595959; font-weight: 500;">
-          <p style="margin-right: 10px;">Pantallas de diseño</p>
+          <p style="margin-right: 10px;">Nintendo</p>
           <p class="mdi mdi-chevron-down"></p>
         </div>
         <div class="d-flex" style="padding-top: 24px; padding-left: 15px; font-size: 14px; color: #595959; font-weight: 500;">
-          <p style="margin-right: 10px;">Más</p>
+          <p style="margin-right: 10px;">Suscripciones</p>
+          <p class="mdi mdi-chevron-down"></p>
+        </div>
+        <div class="d-flex" style="padding-top: 24px; padding-left: 15px; font-size: 14px; color: #595959; font-weight: 500;">
+          <p style="margin-right: 10px;">Tarjetas de Regalo</p>
           <p class="mdi mdi-chevron-down"></p>
         </div>
       </div>
       <!-- Licencia y precios -->
       <div class="d-flex" style="margin-left: 80px;">
-        <p style="padding-top: 24px; font-size: 14px; color: #595959; margin-right: 25px; font-weight: 500;">Licencia</p>
-        <p style="padding-top: 24px; font-size: 14px; color: #595959; margin-right: 25px; font-weight: 500;">Precios</p>
+        <p style="padding-top: 24px; font-size: 14px; color: #595959; margin-right: 25px; font-weight: 500;">Carrito</p>
+        <p style="padding-top: 24px; font-size: 14px; color: #595959; margin-right: 25px; font-weight: 500;">Monedero</p>
       </div>
       <!-- Botón descargas -->
       <button
