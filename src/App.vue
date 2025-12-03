@@ -1,11 +1,27 @@
 <script setup></script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <AppHeader />
+  <main class="app-container">
+    <RouterView />
+  </main>
 </template>
 
-<style scoped></style>
+<script setup>
+import AppHeader from './components/Header.vue'
+</script>
+
+<style>
+html, body, #app {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.app-container {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+</style>
