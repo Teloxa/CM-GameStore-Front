@@ -2,8 +2,9 @@
   <div
     style="
       background-color: #fcf0ef;
-      height: 100vh;
-      width: 100%;"
+      height: auto;
+      width: 100%;
+      justify-content: center;"
   >
     <!-- Banner ofertas -->
     <div 
@@ -24,24 +25,23 @@
       class="d-flex"
       style="
         width: 100%;
+        justify-content: center;
         margin-top: 20px;"
     >
       <img 
         src="/public/imgs//promo-banner.png"
         style="
           border-radius: 10px;
-          margin-left: 20px;
           width: 1480px;"
       >
-      <div>
-
-      </div>
     </div>
-    <!-- Juegos Principales -->
   </div>
+  <CatalogView />
 </template>
 
-<script>
+<script setup>
+import CatalogView from '../views/CatalogView.vue';
+
 </script>
 
 <style>

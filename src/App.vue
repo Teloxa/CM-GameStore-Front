@@ -1,5 +1,3 @@
-<script setup></script>
-
 <template>
   <AppHeader />
   <main class="app-container">
