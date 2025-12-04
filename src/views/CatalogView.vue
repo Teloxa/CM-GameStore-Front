@@ -1,87 +1,124 @@
 <template>
-  <v-container 
+  <div 
     style="
       background-color: #fcf0ef;
-      height: 2000px;
-      display: grid;
-      justify-content: center;
+      height: auto;
       width: 100%;
-      padding-top: 70px;"
+      padding-top: 60px;"
   >
-    <p
+    <div 
       style="
-        font-size: 28px;
-        font-weight: 600;
-        background-color: red;
-        width: 1480px;">
-      Juegos Principales
-    </p>
-    <div v-if="loading" class="alert alert-info">Cargando juegos...</div>
-    <div v-if="error" class="alert alert-danger">{{ error }}</div>
-
-    <div class="row">
-      <div
-        v-for="game in games"
-        :key="game.id"
-        class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4"
+        background-color: blue; 
+        width: 100%;
+        max-width: 1480px;
+        margin: 0 auto;"
+    >
+      <p
+        style="
+          font-size: 30px;
+          font-weight: 600;
+          width: 1440px;
+          margin-bottom: 6px;"
       >
-        <div class="card h-100">
-          <!-- 1) Intentar imagen local -->
-          <img
-            v-if="localImageUrl(game)"
-            class="card-img-top"
-            :src="localImageUrl(game)"
-            alt="Screenshot local"
-            @error="
-              // si falla la local, que use la de IGDB como fallback
-              $event.target.src =
-                game.screenshots && game.screenshots.length
-                  ? normalizeScreenshot(game.screenshots[0])
-                  : ''
-            "
-          />
+        Juegos Principales
+      </p>
+      <div 
+        v-if="loading" 
+        class="alert alert-info"  
+        style="
+          height: 60px; 
+          font-style: italic;"
+      >
+        Cargando...
+      </div>
+      <div 
+        v-if="error" 
+        class="alert alert-danger" 
+        style="
+          height: 60px; 
+          font-style: italic;"
+      >
+        {{ error }}
+      </div>
+      <div
+        style="
+          background-color: red;
+          width: 100%;
+          text-align: center;"
+      >
+        <button
+          v-for="game in games"
+          :key="game.id"
+          style="
+            width: 275px;
+            height: 600px;
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-bottom: 10px;"
+        >
+          <div class="card h-100">
+            <!-- 1) Intentar imagen local -->
+            <img
+              v-if="localImageUrl(game)"
+              class="card-img-top"
+              :src="localImageUrl(game)"
+              alt="Screenshot local"
+              @error="
+                // si falla la local, que use la de IGDB como fallback
+                $event.target.src =
+                  game.screenshots && game.screenshots.length
+                    ? normalizeScreenshot(game.screenshots[0])
+                    : ''
+              "
+            />
 
-          <!-- Si quisieras, podrías dejar un v-else con la de IGDB directamente -->
+            <!-- Si quisieras, podrías dejar un v-else con la de IGDB directamente -->
 
-          <div class="card-body">
-            <h5 class="card-title">{{ game.titulo }}</h5>
-            <p class="card-text">
-              {{ game.sinopsis || "Sin sinopsis disponible" }}
-            </p>
+            <div class="card-body">
+              <h5 class="card-title">{{ game.titulo }}</h5>
+              <p class="card-text">
+                {{ game.sinopsis || "Sin sinopsis disponible" }}
+              </p>
+            </div>
           </div>
-        </div>
+        </button>
       </div>
     </div>
-  </v-container>
+  </div>
 </template>
 
-<script setup>
-import { onMounted, computed } from "vue";
-import { useGamesStore } from "../stores/gamesStore.js";
+<script>
+import { mapState, mapActions } from 'pinia'
+import { useGamesStore } from '../stores/gamesStore.js'
 
-const gamesStore = useGamesStore();
+export default {
+  name: 'CatalogView',
 
-onMounted(() => {
-  gamesStore.fetchGames();
-});
-console.log('Juegos:', gamesStore);
+  computed: {
+    ...mapState(useGamesStore, ['games', 'loading', 'error']),
+  },
 
-const normalizeScreenshot = (url) => {
-  if (!url) return "";
-  if (url.startsWith("//")) return "https:" + url;
-  return url;
-};
+  methods: {
+    ...mapActions(useGamesStore, ['fetchGames']),
 
-const localImageUrl = (game) => {
-  if (!game.slug) return null;
-  return `http://localhost:3000/images/games/${game.slug}.jpg`;
-};
+    normalizeScreenshot(url) {
+      if (!url) return ''
+      if (url.startsWith('//')) return 'https:' + url
+      return url
+    },
 
-const games = computed(() => gamesStore.games);
-const loading = computed(() => gamesStore.loading);
-const error = computed(() => gamesStore.error);
+    localImageUrl(game) {
+      if (!game || !game.slug) return null
+      return `http://localhost:3000/images/games/${game.slug}.jpg`
+    },
+  },
+
+  mounted() {
+    this.fetchGames()
+    console.log('Juegos:', this.games)
+  },
+}
 </script>
 
 <style>
 </style>
-
