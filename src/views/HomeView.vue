@@ -37,6 +37,38 @@
     </div>
   </div>
   <CatalogView />
+  <div
+    style="
+      background-color: #fcf0ef;
+      height: 250px;
+      text-align: center;"
+  >
+    <p 
+      style="
+        font-size: 40px;
+        font-weight: 600;"
+    >
+      Con la confianza de las mejores marcas y compañías
+    </p>
+    <!-- Marcas -->
+    <div 
+      style="
+        height: 130px;
+        width: 100%; 
+        text-align: center; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;"
+    >
+      <div class="d-flex">
+        <img src="/public/imgs/linux.jpg" alt="" style="height: 200px; margin-right: 40px; margin-top: -40px;">
+        <img src="/public/imgs/microsoft.png" alt="" style="height: 50px; margin-top: 30px;">
+        <img src="/public/imgs/nintendo.png" alt="" style="height: 50px; margin-top: 30px; margin-left: 40px;">
+        <img src="/public/imgs/sony.png" alt="" style="height: 30px; margin-top: 38px; margin-left: 40px;">
+        <img src="/public/imgs/steam.png" alt="" style="height: 80px; margin-top: 14px; margin-left: 40px;">
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
