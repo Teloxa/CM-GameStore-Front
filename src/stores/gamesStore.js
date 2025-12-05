@@ -18,6 +18,7 @@ export const useGamesStore = defineStore("games", {
       try {
         const { data } = await axios.get("http://localhost:3000/api/games");
         this.games = data;
+        console.log('juegos:', this.games);
       } catch (err) {
         console.error("Error al obtener juegos:", err);
         this.error =
