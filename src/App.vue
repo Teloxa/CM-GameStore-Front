@@ -3,10 +3,12 @@
   <main class="app-container">
     <RouterView />
   </main>
+  <AppFooter />
 </template>
 
 <script setup>
 import AppHeader from './components/Header.vue'
+import AppFooter from './components/Footer.vue'
 </script>
 
 <style>

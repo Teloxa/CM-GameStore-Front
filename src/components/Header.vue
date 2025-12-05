@@ -39,47 +39,44 @@
         </p>
       </div>
       <!-- Opciones -->
-      <div class="d-flex">
-        <div class="d-flex" style="padding-top: 24px; padding-left: 20px; font-size: 14px; color: #595959; font-weight: 500;">
-          <p style="margin-right: 10px;">Novedades</p>
-          <p class="mdi mdi-chevron-down"></p>
-        </div>
-        <div class="d-flex" style="padding-top: 24px; padding-left: 15px; font-size: 14px; color: #595959; font-weight: 500;">
-          <p style="margin-right: 10px;">GOtY's</p>
-          <p class="mdi mdi-chevron-down"></p>
-        </div>
-        <div class="d-flex" style="padding-top: 24px; padding-left: 20px; font-size: 14px; color: #595959; font-weight: 500;">
-          <p style="margin-right: 10px;">Steam</p>
-          <p class="mdi mdi-chevron-down"></p>
-        </div>
-        <div class="d-flex" style="padding-top: 24px; padding-left: 15px; font-size: 14px; color: #595959; font-weight: 500;">
-          <p style="margin-right: 10px;">Xbox</p>
-          <p class="mdi mdi-chevron-down"></p>
-        </div>
-        <div class="d-flex" style="padding-top: 24px; padding-left: 15px; font-size: 14px; color: #595959; font-weight: 500;">
-          <p style="margin-right: 10px;">PS</p>
-          <p class="mdi mdi-chevron-down"></p>
-        </div>
-        <div class="d-flex" style="padding-top: 24px; padding-left: 15px; font-size: 14px; color: #595959; font-weight: 500;">
-          <p style="margin-right: 10px;">Nintendo</p>
-          <p class="mdi mdi-chevron-down"></p>
-        </div>
-        <div class="d-flex" style="padding-top: 24px; padding-left: 15px; font-size: 14px; color: #595959; font-weight: 500;">
-          <p style="margin-right: 10px;">Suscripciones</p>
-          <p class="mdi mdi-chevron-down"></p>
-        </div>
-        <div class="d-flex" style="padding-top: 24px; padding-left: 15px; font-size: 14px; color: #595959; font-weight: 500;">
-          <p style="margin-right: 10px;">Tarjetas de Regalo</p>
-          <p class="mdi mdi-chevron-down"></p>
-        </div>
+      <div class="d-flex options-actions">
+        <button class="d-flex" style="padding-top: 24px; padding-left: 25px; font-size: 14px; color: #595959; font-weight: 500;">
+          <p style="margin-right: 6px;">Windows</p>
+          <p class="mdi mdi-microsoft-windows" style="font-size: 22px; margin-top: -6px;"></p>
+        </button>
+        <button class="d-flex" style="padding-top: 24px; padding-left: 25px; font-size: 14px; color: #595959; font-weight: 500;">
+          <p style="margin-right: 6px;">Steam</p>
+          <p class="mdi mdi-steam" style="font-size: 22px; margin-top: -6px;"></p>
+        </button>
+        <button class="d-flex" style="padding-top: 24px; padding-left: 25px; font-size: 14px; color: #595959; font-weight: 500;">
+          <p style="margin-right: 6px;">Xbox</p>
+          <p class="mdi mdi-microsoft-xbox" style="font-size: 22px; margin-top: -6px;"></p>
+        </button>
+        <button class="d-flex" style="padding-top: 24px; padding-left: 25px; font-size: 14px; color: #595959; font-weight: 500;">
+          <p style="margin-right: 6px;">PS</p>
+          <p class="mdi mdi-sony-playstation" style="font-size: 22px; margin-top: -6px;"></p>
+        </button>
+        <button class="d-flex" style="padding-top: 24px; padding-left: 25px; font-size: 14px; color: #595959; font-weight: 500;">
+          <p style="margin-right: 6px;">Nintendo</p>
+          <p class="mdi mdi-nintendo-switch" style="font-size: 22px; margin-top: -6px;"></p>
+        </button>
+        <button class="d-flex" style="padding-top: 24px; padding-left: 25px; font-size: 14px; color: #595959; font-weight: 500;">
+          <p style="margin-right: 6px;">Suscripciones</p>
+          <p class="mdi mdi-package-variant-plus" style="font-size: 22px; margin-top: -6px;"></p>
+        </button>
+        <button class="d-flex" style="padding-top: 24px; padding-left: 25px; font-size: 14px; color: #595959; font-weight: 500;">
+          <p style="margin-right: 6px;">Tarjetas de Regalo</p>
+          <p class="mdi mdi-wallet-giftcard" style="font-size: 22px; margin-top: -6px;"></p>
+        </button>
       </div>
-      <!-- Licencia y precios -->
-      <div class="d-flex" style="margin-left: 80px;">
-        <p style="padding-top: 24px; font-size: 14px; color: #595959; margin-right: 25px; font-weight: 500;">Carrito</p>
-        <p style="padding-top: 24px; font-size: 14px; color: #595959; margin-right: 25px; font-weight: 500;">Monedero</p>
-      </div>
-      <!-- Botón descargas -->
+      <!-- Carrito -->
+      <button class="d-flex shop" style="margin-left: 130px;">
+        <p style="padding-top: 24px; font-size: 14px; color: #595959; margin-right: 10px; font-weight: 500;">Carrito</p>
+        <p class="mdi mdi-cart-outline" style="font-size: 22px; margin-top: -6px; padding-top: 24px; margin-right: 20px;"></p>
+      </button>
+      <!-- Identifícate -->
       <button
+        class="login"
         style="
           background-color: #73e900;
           height: 45px;
@@ -90,7 +87,7 @@
           width: 240px;
           font-size: 17px;
           padding-top: 0px;">
-        Obtén descargas ilimitadas
+        Idenfitícate o Regístrate
       </button>
       <!-- foto de perfil -->
       <div>
@@ -115,44 +112,17 @@
           padding-left: 20px;
           padding-right: 20px;"
         >
-        <div
-          class="d-flex" 
-          style="
-            background-color: white;
-            font-size: 16px;
-            border: 2px solid #cecece;
-            border-right: 0px;
-            border-radius: 40px 0px 0px 40px;
-            padding-inline-start: 20px;
-            padding-inline-end: 20px;
-            padding-top: 11px;
-            height: 50px;"
-        >
-          <p style="margin-right: 10px;">
-            Todos los artículos
-          </p>
-          <p class="mdi mdi-chevron-down"></p>
-        </div>
         <div 
           class="d-flex"
           style="
             background-color: white;
             font-size: 18px;
             border: 2px solid #cecece;
-            border-left: 0px;
-            border-radius: 0px 40px 40px 0px;
+            border-radius: 40px;
             padding-inline-start: 0px;
             padding-inline-end: 20px;
             height: 50px;"
         >
-          <p
-            style="
-              font-size: 26px;
-              color: #cecece;
-              font-weight: 200;"
-          >
-            |
-          </p>
           <p 
             class="mdi mdi-magnify"
             style="
@@ -177,5 +147,24 @@
   </div>
 </template>
 
-<style scoped>
+<style>
+.options-actions button {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.options-actions button:hover {
+  transform: scale(1.03);
+  filter: brightness(1.05);
+}
+
+.shop:hover {
+  transform: scale(1.03);
+  filter: brightness(1.05);
+}
+
+.login:hover {
+  transform: scale(1.03);
+  filter: brightness(1.05);
+}
 </style>
