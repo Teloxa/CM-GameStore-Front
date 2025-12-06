@@ -317,7 +317,9 @@
               <input 
                 class="input-login"
                 v-model="phone"
-                placeholder="Ejem. 464 589 2054"
+                @input="onPhoneInput"
+                placeholder="Ejem. 464-589-2054"
+                inputmode="numeric"
                 type="text"
                 style="
                   border: 2px solid #a7a7a7;
@@ -347,8 +349,8 @@
               Contraseña
             </p>
             <input 
-              v-model="password"
               class="input-login"
+              v-model="password"
               type="password"
               style="
                 border: 2px solid #a7a7a7;
@@ -375,8 +377,8 @@
               font-size: 17px;
               padding-top: 0px;
               transition: box-shadow 0.3s ease, transform 0.2s ease;"
-                @mouseover="hoverLogin = true" @mouseleave="hoverLogin = false"
-                :style="hoverLogin ? 'border: 3px solid #73e900; transform: translateY(-2px);' : ''"
+              @mouseover="hoverLogin = true" @mouseleave="hoverLogin = false"
+              :style="hoverLogin ? 'border: 3px solid #73e900; transform: translateY(-2px);' : ''"
           >
             Crear Cuenta
           </button>
@@ -393,8 +395,7 @@
             <button 
               @click="GoToLogin"
               class="underline-hover"
-              style="
-                margin: 0px;"
+              style="margin: 0px;"
             >
               Inicia sesión
             </button>
@@ -413,15 +414,15 @@
         </div>
       </div>
     </div>
-  </v-container>
 
-  <v-snackbar
-    v-model="snackbar"
-    :color="snackbarColor"
-    timeout="3000"
-  >
-    {{ snackbarMsg }}
-  </v-snackbar>
+    <v-snackbar
+      v-model="snackbar"
+      :color="snackbarColor"
+      timeout="3000"
+    >
+      {{ snackbarMsg }}
+    </v-snackbar>
+  </v-container>
 </template>
 
 <script>
@@ -434,7 +435,7 @@ export default {
   data() {
     return {
       email: "",
-      phone: "",       
+      phone: "",        
       phoneDigits: "",  
       username: "",
       password: "",     
@@ -446,20 +447,21 @@ export default {
 
       snackbar: false,
       snackbarMsg: "",
-      snackbarColor: '',
+      snackbarColor: "",
     };
   },
+
   methods: {
     ...mapActions(useUserStore, ["register"]),
 
     GoHome() {
-      this.$router.push({path: '/'})
-      window.scrollTo({ top: 0, behavior: 'auto' });
+      this.$router.push({ path: "/" });
+      window.scrollTo({ top: 0, behavior: "auto" });
     },
 
     GoToLogin() {
-      this.$router.push({path: '/Login'})
-      window.scrollTo({ top: 0, behavior: 'auto' });
+      this.$router.push({ path: "/Login" });
+      window.scrollTo({ top: 0, behavior: "auto" });
     },
 
     isValidEmail(email) {
@@ -497,11 +499,13 @@ export default {
         return;
       }
 
+      // Email válido
       if (!this.isValidEmail(this.email)) {
         this.showSnackbar("Ingresa un correo electrónico válido", "error");
         return;
       }
 
+      // Teléfono de 10 dígitos
       if (this.phoneDigits.length !== 10) {
         this.showSnackbar("El teléfono debe tener 10 dígitos", "error");
         return;
@@ -510,7 +514,7 @@ export default {
       try {
         await this.register({
           email: this.email,
-          phone: this.phoneDigits,  
+          phone: this.phoneDigits, // sin guiones
           username: this.username,
           password: this.password,
         });
@@ -524,16 +528,16 @@ export default {
         this.showSnackbar(msg, "error");
       }
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
 .v-container {
-    width: 100%;
-    padding: 0px;
-    margin-right: auto;
-    margin-left: auto;
+  width: 100%;
+  padding: 0px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .input-login:focus {
@@ -553,14 +557,6 @@ export default {
   background: none;
   border: none;
   margin-bottom: 20px;
-  cursor: pointer;
-  transition: text-decoration 0.2s ease;
-}
-
-.underline-hover-end {
-  color: #afafaf;
-  background: none;
-  border: none;
   cursor: pointer;
   transition: text-decoration 0.2s ease;
 }

@@ -384,7 +384,7 @@ export default {
   },
   methods: {
     ...mapActions(useUserStore, ["login"]),
-    
+
     GoHome() {
       this.$router.push({path: '/'})
       window.scrollTo({ top: 0, behavior: 'auto' });
@@ -420,12 +420,20 @@ export default {
       }
 
       try {
-        await this.login({ email: this.email, password: this.password });
+        const resp = await this.login({
+          email: this.email,
+          password: this.password,
+        });
+
+        console.log("Login exitoso. Usuario:", resp?.user || "ver store");
+
         this.showSnackbar("Inicio de sesión correcto", "success");
+
         this.$router.push({ name: "home" });
       } catch (e) {
         const msg =
-          e?.response?.data?.message || "Error al iniciar sesión. Inténtalo de nuevo.";
+          e?.response?.data?.message ||
+          "Error al iniciar sesión. Inténtalo de nuevo.";
         this.showSnackbar(msg, "error");
       }
     },

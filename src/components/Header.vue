@@ -65,44 +65,92 @@
           <p style="margin-right: 6px;">Suscripciones</p>
           <p class="mdi mdi-package-variant-plus" style="font-size: 22px; margin-top: -6px;"></p>
         </button>
-        <button class="d-flex" style="padding-top: 24px; padding-left: 25px; font-size: 14px; color: #595959; font-weight: 500;">
-          <p style="margin-right: 6px;">Tarjetas de Regalo</p>
-          <p class="mdi mdi-wallet-giftcard" style="font-size: 22px; margin-top: -6px;"></p>
-        </button>
       </div>
-      <!-- Carrito -->
+      <!-- Carrito y favs -->
       <button class="d-flex shop" style="margin-left: 130px;">
         <p style="padding-top: 24px; font-size: 14px; color: #595959; margin-right: 10px; font-weight: 500;">Carrito</p>
         <p class="mdi mdi-cart-outline" style="font-size: 22px; margin-top: -6px; padding-top: 24px; margin-right: 20px;"></p>
       </button>
-      <!-- Identifícate -->
-      <button
-        class="login"
-        @click="GoToLogin"
-        style="
-          background-color: #73e900;
-          height: 45px;
-          border-radius: 5px;
-          border: 0px;
-          margin-top: 14px;
-          font-weight: 600;
-          width: 240px;
-          font-size: 17px;
-          padding-top: 0px;">
-        Idenfitícate o Regístrate
+      <button class="d-flex shop" style="margin-left: 10px;">
+        <p style="padding-top: 24px; font-size: 14px; color: #595959; margin-right: 10px; font-weight: 500;">Favoritos</p>
+        <p class="mdi mdi-heart" style="font-size: 22px; margin-top: -6px; padding-top: 24px; margin-right: 20px;"></p>
       </button>
-      <!-- foto de perfil -->
-      <div>
-        <p 
-          class="mdi mdi-account-circle"
+      <!-- Identifícate -->
+      <!-- Si no hay usuario logueado: botón Identifícate -->
+      <div v-if="!currentUser" class="d-flex">
+        <button
+          class="login"
+          @click="GoToLogin"
           style="
-            font-size: 35px;
-            margin-bottom: 0px;
-            margin-top: 10px;
-            margin-left: 20px;"  
+            background-color: #73e900;
+            height: 45px;
+            border-radius: 5px;
+            border: 0px;
+            margin-top: 14px;
+            font-weight: 600;
+            width: 240px;
+            font-size: 17px;
+            padding-top: 0px;"
         >
-        </p>
+          Identifícate o Regístrate
+        </button>
+        <!-- foto de perfil -->
+        <div>
+          <p 
+            class="mdi mdi-account-circle"
+            style="
+              font-size: 35px;
+              margin-bottom: 0px;
+              margin-top: 10px;
+              margin-left: 20px;"  
+          >
+          </p>
+        </div>
+      </div>  
+      <!-- Si hay usuario logueado: mostrar username -->
+      <div
+        v-else
+        class="d-flex"
+        style="
+          margin-top: 0px;
+          margin-left: 0px;
+          align-items: center;"
+      >
+        <div class="d-flex" style="background-color: #73e900; width: 190px; border-radius: 30px; padding-left: 10px;">
+          <p 
+            class="mdi mdi-account-circle"
+            style="
+              font-size: 35px;
+              margin-bottom: 0px;
+              margin-right: 8px;"  
+          ></p>
+          <p 
+            style="
+              font-weight: 600; 
+              font-size: 16px; 
+              color: #333; 
+              margin: 0px; 
+              margin-top: 14px; 
+              width: 160px; 
+              max-width: 160px; 
+              overflow: hidden;"
+          >
+            {{ currentUser.username }}
+          </p>
+        </div>
+        <button
+          @click="handleLogout"
+          style="
+            margin-left: 20px;
+            border: none;
+            color: #888;
+            font-size: 14px;
+            cursor: pointer;"
+        >
+          Cerrar sesión
+        </button>
       </div>
+      
     </div>
     <!-- Segunda parte -->
     <div class="d-flex" style="padding-bottom: 15px; justify-content: center;">
@@ -151,12 +199,19 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'pinia'
+import { mapState, mapActions } from 'pinia';
+import { useUserStore } from "../stores/userStore";
 
 export default {
   name: 'Header.vue',
 
+  computed: {
+    ...mapState(useUserStore, ["currentUser"]),
+  },
+
   methods: {
+    ...mapActions(useUserStore, ["logout", "loadFromStorage"]),
+
     GoToLogin() {
       this.$router.push({path: '/Login'})
       window.scrollTo({ top: 0, behavior: 'auto' });
@@ -164,8 +219,17 @@ export default {
     GoHome() {
       this.$router.push({path: '/'})
       window.scrollTo({ top: 0, behavior: 'auto' });
-    }
-  }
+    },
+    handleLogout() {
+      this.logout();
+      this.$router.push({ name: "home" });
+    },
+  },
+
+  created() {
+    // Por si recargas la página, se vuelve a leer el usuario del localStorage
+    this.loadFromStorage();
+  },
 }
 </script>
 

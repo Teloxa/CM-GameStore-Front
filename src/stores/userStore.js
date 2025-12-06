@@ -22,6 +22,8 @@ export const useUserStore = defineStore("user", {
         this.currentUser = data.user;
         localStorage.setItem("currentUser", JSON.stringify(this.currentUser));
 
+        console.log("Registro exitoso. Usuario:", this.currentUser);
+
         return data;
       } catch (err) {
         console.error("Error al registrar usuario:", err);
@@ -47,7 +49,9 @@ export const useUserStore = defineStore("user", {
         this.currentUser = data.user;
         localStorage.setItem("currentUser", JSON.stringify(this.currentUser));
 
-        return data;
+        console.log("currentUser guardado en store:", this.currentUser);
+
+        return data; 
       } catch (err) {
         console.error("Error al iniciar sesión:", err);
         this.error =
@@ -62,12 +66,14 @@ export const useUserStore = defineStore("user", {
     logout() {
       this.currentUser = null;
       localStorage.removeItem("currentUser");
+      console.log("Sesión cerrada");
     },
 
     loadFromStorage() {
       const stored = localStorage.getItem("currentUser");
       if (stored) {
         this.currentUser = JSON.parse(stored);
+        console.log("Usuario cargado desde localStorage:", this.currentUser);
       }
     },
   },
