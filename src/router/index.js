@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import CatalogView from '../views/CatalogView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
+import GameDetailView from '../views/GameDetailView.vue'
 
 const routes = [
   {
@@ -26,6 +27,12 @@ const routes = [
     name: 'register',
     component: RegisterView,
     meta: { hideHeader: true, hideFooter: true } 
+  },
+  {
+    path: '/games/:id',              
+    name: 'game-detail',
+    component: GameDetailView,
+    props: true
   }
 ]
 

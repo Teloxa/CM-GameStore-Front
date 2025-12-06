@@ -55,6 +55,7 @@
           v-for="game in games"
           :key="game.id"
           class="game-card"
+          @click="goToGame(game.id)"
         >
           <div class="game-card-inner">
             <img
@@ -208,6 +209,7 @@
           v-for="game in topRatedGames"
           :key="game.id"
           class="game-card"
+          @click="goToGame(game.id)"
         >
           <div class="game-card-inner">
             <img
@@ -707,6 +709,11 @@ export default {
       })
 
       return Array.from(uniqueClasses)
+    },
+
+    goToGame(id) {
+      this.$router.push({ name: 'game-detail', params: { id } })
+      window.scrollTo({ top: 0, behavior: 'auto' })
     },
   },
 
