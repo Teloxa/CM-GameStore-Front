@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import CatalogView from '../views/CatalogView.vue'
+import LoginView from '../views/LoginView.vue'
 
 const routes = [
   {
@@ -12,6 +13,12 @@ const routes = [
     path: '/CatalogView',
     name: 'catalog',
     component: CatalogView
+  },
+  {
+    path: '/Login',
+    name: 'login',
+    component: LoginView,
+    meta: { hideHeader: true, hideFooter: true } 
   }
 ]
 

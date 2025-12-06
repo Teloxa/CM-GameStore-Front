@@ -77,6 +77,7 @@
       <!-- Identifícate -->
       <button
         class="login"
+        @click="GoToLogin"
         style="
           background-color: #73e900;
           height: 45px;
@@ -146,6 +147,21 @@
     </div>
   </div>
 </template>
+
+<script>
+import { mapState, mapActions } from 'pinia'
+
+export default {
+  name: 'Header.vue',
+
+  methods: {
+    GoToLogin() {
+      this.$router.push({path: '/Login'})
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }
+}
+</script>
 
 <style>
 .options-actions button {
