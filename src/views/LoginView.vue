@@ -8,16 +8,19 @@
   >
     <!-- Header -->
     <div
+      class="d-flex"
       style="
         background-color: black;
         width: 100%;
         height: 70px;
-        position:sticky;
+        position: sticky;
+        justify-content: space-between;
         top: 0"
     >
       <!-- App name -->
-      <div 
+      <button
         class="d-flex" 
+        @click="GoHome"
         style="
           margin-top: -5px;
           padding-left: 20px;
@@ -43,7 +46,19 @@
         >
           Game Store
         </p>
-      </div>
+      </button>
+      <!-- Registrar -->
+      <button
+        class="underline-hover"
+        @click="GoToRegister"
+        style="
+          padding-right: 20px;
+          margin: 0px;
+          color: #cecece;
+          font-size: 17px;"
+      >
+        Regístrate
+      </button>
     </div>
     <!-- Contenido -->
     <div
@@ -282,7 +297,7 @@
           <!-- Botón de inicio de sesión -->
           <button
             class="login"
-            @click="GoToLogin"
+            @click="Login"
             style="
               background-color: #73e900;
               height: 45px;
@@ -310,6 +325,7 @@
               ¿Eres nuevo?
             </p>
             <button 
+              @click="GoToRegister"
               class="underline-hover"
               style="
                 margin: 0px;"
@@ -347,6 +363,16 @@ export default {
       snackbarMsg: "",
       snackbarColor: '',
     };
+  },
+  methods: {
+    GoHome() {
+      this.$router.push({path: '/'})
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    },
+    GoToRegister() {
+      this.$router.push({path: '/Register'})
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
   }
 }
 </script>

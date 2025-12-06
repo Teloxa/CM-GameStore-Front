@@ -11,7 +11,8 @@
     <!-- Primera parte -->
     <div class="d-flex" style="justify-content: center; padding-left: 0px; margin-bottom: 5px;">
       <!-- App name -->
-      <div 
+      <button
+        @click="GoHome"
         class="d-flex" 
         style="
           margin-top: -5px;
@@ -37,7 +38,7 @@
         >
           Game Store
         </p>
-      </div>
+      </button>
       <!-- Opciones -->
       <div class="d-flex options-actions">
         <button class="d-flex" style="padding-top: 24px; padding-left: 25px; font-size: 14px; color: #595959; font-weight: 500;">
@@ -133,6 +134,7 @@
           >
           </p>
           <input 
+            class="input-search"
             type="text"
             placeholder="Buscar"
             style="
@@ -158,6 +160,10 @@ export default {
     GoToLogin() {
       this.$router.push({path: '/Login'})
       window.scrollTo({ top: 0, behavior: 'auto' });
+    },
+    GoHome() {
+      this.$router.push({path: '/'})
+      window.scrollTo({ top: 0, behavior: 'auto' });
     }
   }
 }
@@ -182,5 +188,17 @@ export default {
 .login:hover {
   transform: scale(1.03);
   filter: brightness(1.05);
+}
+
+.input-search:focus {
+  border-color: #73e900;
+  outline: none;
+  box-shadow: 0 0 0 3px #73e900;
+}
+
+.input-search::placeholder {
+  color: #7a7a7a;
+  font-size: 18px;
+  font-style: italic;
 }
 </style>
