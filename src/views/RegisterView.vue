@@ -254,6 +254,7 @@
             </p>
             <input 
               class="input-login"
+              v-model="email"
               placeholder="Ejem. holabuenas@gmail.com"
               type="email"
               style="
@@ -285,6 +286,7 @@
               </p>
               <input 
                 class="input-login"
+                v-model="username"
                 placeholder="elmásperrón"
                 type="text"
                 style="
@@ -314,6 +316,7 @@
               </p>
               <input 
                 class="input-login"
+                v-model="phone"
                 placeholder="Ejem. 464 589 2054"
                 type="text"
                 style="
@@ -344,6 +347,7 @@
               Contraseña
             </p>
             <input 
+              v-model="password"
               class="input-login"
               type="password"
               style="
@@ -410,12 +414,31 @@
       </div>
     </div>
   </v-container>
+
+  <v-snackbar
+    v-model="snackbar"
+    :color="snackbarColor"
+    timeout="3000"
+  >
+    {{ snackbarMsg }}
+  </v-snackbar>
 </template>
 
 <script>
+import { useUserStore } from "../stores/userStore";
+import { mapActions } from "pinia";
+
 export default {
+  name: "RegisterView",
+
   data() {
     return {
+      email: "",
+      phone: "",       
+      phoneDigits: "",  
+      username: "",
+      password: "",     
+
       hoverGoogle: false,
       hoverMicrosoft: false,
       hoverFacebook: false,
@@ -427,14 +450,80 @@ export default {
     };
   },
   methods: {
+    ...mapActions(useUserStore, ["register"]),
+
     GoHome() {
       this.$router.push({path: '/'})
       window.scrollTo({ top: 0, behavior: 'auto' });
     },
+
     GoToLogin() {
       this.$router.push({path: '/Login'})
       window.scrollTo({ top: 0, behavior: 'auto' });
-    }
+    },
+
+    isValidEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    },
+
+    showSnackbar(message, color = "error") {
+      this.snackbarMsg = message;
+      this.snackbarColor = color;
+      this.snackbar = true;
+    },
+
+    formatPhone(digits) {
+      if (!digits) return "";
+      const p1 = digits.slice(0, 3);
+      const p2 = digits.slice(3, 6);
+      const p3 = digits.slice(6, 10);
+
+      if (digits.length <= 3) return p1;
+      if (digits.length <= 6) return `${p1}-${p2}`;
+      return `${p1}-${p2}-${p3}`;
+    },
+
+    onPhoneInput(event) {
+      let value = event.target.value || "";
+      let digits = value.replace(/\D/g, "").slice(0, 10);
+      this.phoneDigits = digits;
+      this.phone = this.formatPhone(digits);
+    },
+
+    async Register() {
+      if (!this.email || !this.username || !this.phoneDigits || !this.password) {
+        this.showSnackbar("Por favor completa todos los campos", "error");
+        return;
+      }
+
+      if (!this.isValidEmail(this.email)) {
+        this.showSnackbar("Ingresa un correo electrónico válido", "error");
+        return;
+      }
+
+      if (this.phoneDigits.length !== 10) {
+        this.showSnackbar("El teléfono debe tener 10 dígitos", "error");
+        return;
+      }
+
+      try {
+        await this.register({
+          email: this.email,
+          phone: this.phoneDigits,  
+          username: this.username,
+          password: this.password,
+        });
+
+        this.showSnackbar("Cuenta creada correctamente", "success");
+        this.$router.push({ name: "login" });
+      } catch (e) {
+        const msg =
+          e?.response?.data?.message ||
+          "Error al registrar usuario. Inténtalo de nuevo.";
+        this.showSnackbar(msg, "error");
+      }
+    },
   }
 }
 </script>

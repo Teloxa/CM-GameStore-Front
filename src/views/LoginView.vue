@@ -253,6 +253,7 @@
             </p>
             <input 
               class="input-login"
+              v-model="email"
               placeholder="Ejem. holabuenas@gmail.com"
               type="email"
               style="
@@ -283,6 +284,7 @@
             </p>
             <input 
               class="input-login"
+              v-model="password"
               type="password"
               style="
                 border: 2px solid #a7a7a7;
@@ -311,7 +313,7 @@
               transition: box-shadow 0.3s ease, transform 0.2s ease;"
                 @mouseover="hoverLogin = true" @mouseleave="hoverLogin = false"
                 :style="hoverLogin ? 'border: 3px solid #73e900; transform: translateY(-2px);' : ''"
-          >
+                >
             Iniciar Sesión
           </button>
           <!-- Botón de registro -->
@@ -348,12 +350,28 @@
       </div>
     </div>
   </v-container>
+
+  <v-snackbar
+    v-model="snackbar"
+    :color="snackbarColor"
+    timeout="3000"
+  >
+    {{ snackbarMsg }}
+  </v-snackbar>
 </template>
 
 <script>
+import { useUserStore } from "../stores/userStore";
+import { mapActions } from "pinia";
+
 export default {
+  name: "LoginView",
+
   data() {
     return {
+      email: "",
+      password: "",
+
       hoverGoogle: false,
       hoverMicrosoft: false,
       hoverFacebook: false,
@@ -365,14 +383,52 @@ export default {
     };
   },
   methods: {
+    ...mapActions(useUserStore, ["login"]),
+    
     GoHome() {
       this.$router.push({path: '/'})
       window.scrollTo({ top: 0, behavior: 'auto' });
     },
+
     GoToRegister() {
       this.$router.push({path: '/Register'})
       window.scrollTo({ top: 0, behavior: 'auto' });
-    }
+    },
+
+    isValidEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    },
+
+    showSnackbar(message, color = "error") {
+      this.snackbarMsg = message;
+      this.snackbarColor = color;
+      this.snackbar = true;
+    },
+
+    async Login() {
+      // Validar campos vacíos
+      if (!this.email || !this.password) {
+        this.showSnackbar("Por favor completa todos los campos", "error");
+        return;
+      }
+
+      // Validar formato de correo
+      if (!this.isValidEmail(this.email)) {
+        this.showSnackbar("Ingresa un correo electrónico válido", "error");
+        return;
+      }
+
+      try {
+        await this.login({ email: this.email, password: this.password });
+        this.showSnackbar("Inicio de sesión correcto", "success");
+        this.$router.push({ name: "home" });
+      } catch (e) {
+        const msg =
+          e?.response?.data?.message || "Error al iniciar sesión. Inténtalo de nuevo.";
+        this.showSnackbar(msg, "error");
+      }
+    },
   }
 }
 </script>
