@@ -4,6 +4,7 @@ import CatalogView from '../views/CatalogView.vue'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import GameDetailView from '../views/GameDetailView.vue'
+import FavoritesView from '@/views/FavoritesView.vue'
 
 const routes = [
   {
@@ -33,7 +34,12 @@ const routes = [
     name: 'game-detail',
     component: GameDetailView,
     props: true
-  }
+  },
+  {
+    path: '/Favorites',
+    name: 'favorites',
+    component: FavoritesView,
+  },
 ]
 
 const router = createRouter({

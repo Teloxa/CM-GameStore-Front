@@ -71,9 +71,29 @@
         <p style="padding-top: 24px; font-size: 14px; color: #595959; margin-right: 10px; font-weight: 500;">Carrito</p>
         <p class="mdi mdi-cart-outline" style="font-size: 22px; margin-top: -6px; padding-top: 24px; margin-right: 20px;"></p>
       </button>
-      <button class="d-flex shop" style="margin-left: 10px;">
-        <p style="padding-top: 24px; font-size: 14px; color: #595959; margin-right: 10px; font-weight: 500;">Favoritos</p>
-        <p class="mdi mdi-heart" style="font-size: 22px; margin-top: -6px; padding-top: 24px; margin-right: 20px;"></p>
+      <button 
+        class="d-flex shop" 
+        @click="handleFavoritesClick"
+        style="margin-left: 10px;"
+      >
+        <p 
+          style="
+            padding-top: 24px; 
+            font-size: 14px; 
+            color: #595959; 
+            margin-right: 10px; 
+            font-weight: 500;"
+        > 
+          Favoritos
+        </p>
+        <p 
+          class="mdi mdi-heart" 
+          style="
+            font-size: 22px; 
+            margin-top: -6px; 
+            padding-top: 24px; 
+            margin-right: 20px;"
+        ></p>
       </button>
       <!-- Identifícate -->
       <!-- Si no hay usuario logueado: botón Identifícate -->
@@ -224,10 +244,19 @@ export default {
       this.logout();
       this.$router.push({ name: "home" });
     },
+    handleFavoritesClick() {
+      if (!this.currentUser) {
+        this.$router.push({ name: 'login' }) 
+        window.scrollTo({ top: 0, behavior: 'auto' });
+        return
+      }
+
+      this.$router.push({ name: 'favorites' }) 
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    },
   },
 
   created() {
-    // Por si recargas la página, se vuelve a leer el usuario del localStorage
     this.loadFromStorage();
   },
 }

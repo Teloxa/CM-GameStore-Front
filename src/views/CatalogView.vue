@@ -51,7 +51,7 @@
           overflow: hidden;
           text-align: center;"
       >
-        <button
+        <div
           v-for="game in games"
           :key="game.id"
           class="game-card"
@@ -67,6 +67,12 @@
                 : ''"
               class="game-image"
             />
+            <div
+              v-if="isFavorite(game.id)"
+              class="favorite-banner"
+            >
+              ★ En favoritos
+            </div>
             <div class="game-info">
               <!-- Título -->
               <div style="height: 64px;">
@@ -144,6 +150,7 @@
                 <!-- Botón carrito -->
                 <button
                   class="d-flex"
+                  @click.stop="handleAddToCart(game)"
                   style="
                     background-color: #73e900;
                     font-size: 18px;
@@ -163,7 +170,9 @@
 
                 <!-- Botón agregar favorito -->
                 <button
+                  v-if="!isFavorite(game.id)"
                   class="d-flex"
+                  @click.stop="handleAddFavorite(game)"
                   style="
                     background-color: #ececec;
                     margin-top: 8px;
@@ -182,7 +191,7 @@
               </div>
             </div>
           </div>
-        </button>
+        </div>
       </div>
       <!-- Juegos mejor calificados -->
       <div
@@ -205,7 +214,7 @@
         >
           Mejor calificados
         </p>
-        <button
+        <div
           v-for="game in topRatedGames"
           :key="game.id"
           class="game-card"
@@ -221,6 +230,12 @@
                 : ''"
               class="game-image"
             />
+            <div
+              v-if="isFavorite(game.id)"
+              class="favorite-banner"
+            >
+              ★ En favoritos
+            </div>
             <div class="game-info">
               <!-- Título -->
               <div style="height: 64px;">
@@ -298,6 +313,7 @@
                 <!-- Botón carrito -->
                 <button
                   class="d-flex"
+                  @click.stop="handleAddToCart(game)"
                   style="
                     background-color: #73e900;
                     font-size: 18px;
@@ -317,7 +333,9 @@
 
                 <!-- Botón agregar favorito -->
                 <button
+                  v-if="!isFavorite(game.id)"
                   class="d-flex"
+                  @click.stop="handleAddFavorite(game)"
                   style="
                     background-color: #ececec;
                     margin-top: 8px;
@@ -336,7 +354,7 @@
               </div>
             </div>
           </div>
-        </button>
+        </div>
       </div>
       <!-- Suscripciones -->
       <div
@@ -368,7 +386,7 @@
             <img
               alt="Screenshot local"
               class="game-image"
-              src="/public/imgs/amazon.jpg"
+              src="/imgs/amazon.jpg"
             />
             <div class="suscripcion-info">
               <!-- Título -->
@@ -423,7 +441,7 @@
             <img
               alt="Screenshot local"
               class="game-image"
-              src="/public/imgs/netflix.jpg"
+              src="/imgs/netflix.jpg"
             />
             <div class="suscripcion-info">
               <!-- Título -->
@@ -478,7 +496,7 @@
             <img
               alt="Screenshot local"
               class="game-image"
-              src="/public/imgs/apple.jpg"
+              src="/imgs/apple.jpg"
             />
             <div class="suscripcion-info">
               <!-- Título -->
@@ -533,7 +551,7 @@
             <img
               alt="Screenshot local"
               class="game-image"
-              src="/public/imgs/spotify.jpg"
+              src="/imgs/spotify.jpg"
             />
             <div class="suscripcion-info">
               <!-- Título -->
@@ -588,7 +606,7 @@
             <img
               alt="Screenshot local"
               class="game-image"
-              src="/public/imgs/discord.jpg"
+              src="/imgs/discord.jpg"
             />
             <div class="suscripcion-info">
               <!-- Título -->
@@ -643,6 +661,8 @@
 <script>
 import { mapState, mapActions } from 'pinia'
 import { useGamesStore } from '../stores/gamesStore.js'
+import { useUserStore } from '../stores/userStore.js'
+import { useFavoritesStore } from "../stores/favoritesStore.js";
 
 const PLATFORM_ICONS = {
   "PS5": "mdi mdi-sony-playstation",
@@ -668,6 +688,8 @@ export default {
 
   computed: {
     ...mapState(useGamesStore, ['games', 'loading', 'error']),
+    ...mapState(useUserStore, ['currentUser']),
+    ...mapState(useFavoritesStore, ["favoriteIds"]), 
 
     topRatedGames() {
       if (!this.games || !this.games.length) return []
@@ -684,6 +706,7 @@ export default {
 
   methods: {
     ...mapActions(useGamesStore, ['fetchGames']),
+    ...mapActions(useFavoritesStore, ["loadFavorites", "addFavorite"]),
 
     normalizeScreenshot(url) {
       if (!url) return ''
@@ -715,12 +738,52 @@ export default {
       this.$router.push({ name: 'game-detail', params: { id } })
       window.scrollTo({ top: 0, behavior: 'auto' })
     },
+
+    isFavorite(gameId) {
+      const idStr = String(gameId);
+      const arr = Array.isArray(this.favoriteIds) ? this.favoriteIds : [];
+      const result = arr.includes(idStr);
+      console.log("isFavorite? gameId:", gameId, "favoriteIds:", arr, "=>", result);
+      return result;
+    },
+
+    async handleAddFavorite(game) {
+      console.log('CLICK FAVORITO sobre:', game.id, game.titulo)
+
+      if (!this.currentUser) {
+        console.log('No hay usuario, redirigiendo a login')
+        this.$router.push({ name: "login" });
+        window.scrollTo({ top: 0, behavior: "auto" });
+        return;
+      }
+
+      if (this.isFavorite(game.id)) {
+        console.log('Ya está en favoritos, no hago nada')
+        return;
+      }
+
+      try {
+        await this.addFavorite(game);  
+        console.log('Juego agregado a favoritos en store')
+      } catch (e) {
+        console.error('Error en handleAddFavorite:', e)
+      }
+    },
+
+    handleAddToCart(game) {
+      console.log("Agregar al carrito:", game.titulo);
+    },
   },
 
-  mounted() {
-    this.fetchGames()
+  async mounted() {
+    this.fetchGames();
+
+    if (this.currentUser) {
+      await this.loadFavorites();
+      console.log('Favoritos cargados en mounted Catalog:', this.favoriteIds)
+    }
   },
-}
+};
 </script>
 
 <style>
@@ -830,6 +893,19 @@ export default {
   padding-bottom: 10px;
   transform: translateY(120px);
   transition: transform 0.25s ease-out;
+}
+
+.favorite-banner {
+  position: absolute;
+  top: 10px;
+  left: -40px;
+  background-color: #73e900;
+  color: black;
+  font-weight: 700;
+  padding: 4px 40px;
+  transform: rotate(-20deg);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  z-index: 2;
 }
 
 </style>

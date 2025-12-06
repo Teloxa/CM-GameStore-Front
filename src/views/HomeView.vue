@@ -61,11 +61,11 @@
         align-items: center;"
     >
       <div class="d-flex">
-        <img src="/public/imgs/linux.jpg" alt="" style="height: 200px; margin-right: 40px; margin-top: -40px;">
-        <img src="/public/imgs/microsoft.png" alt="" style="height: 50px; margin-top: 30px;">
-        <img src="/public/imgs/nintendo.png" alt="" style="height: 50px; margin-top: 30px; margin-left: 40px;">
-        <img src="/public/imgs/sony.png" alt="" style="height: 30px; margin-top: 38px; margin-left: 40px;">
-        <img src="/public/imgs/steam.png" alt="" style="height: 80px; margin-top: 14px; margin-left: 40px;">
+        <img src="/imgs/linux.jpg" alt="" style="height: 200px; margin-right: 40px; margin-top: -40px;">
+        <img src="/imgs/microsoft.png" alt="" style="height: 50px; margin-top: 30px;">
+        <img src="/imgs/nintendo.png" alt="" style="height: 50px; margin-top: 30px; margin-left: 40px;">
+        <img src="/imgs/sony.png" alt="" style="height: 30px; margin-top: 38px; margin-left: 40px;">
+        <img src="/imgs/steam.png" alt="" style="height: 80px; margin-top: 14px; margin-left: 40px;">
       </div>
     </div>
   </div>
