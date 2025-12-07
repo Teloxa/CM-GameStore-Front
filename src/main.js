@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import { piniaQuietPlugin } from "./pinia-quiet-plugin";
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import App from './App.vue'
@@ -17,8 +18,12 @@ const vuetify = createVuetify({
 
 const app = createApp(App)
 
+const pinia = createPinia();
+pinia.use(piniaQuietPlugin);
+
 app.use(createPinia())
 app.use(vuetify)
 app.use(router)
+app.use(pinia);
 
 app.mount('#app')

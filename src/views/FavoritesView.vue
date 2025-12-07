@@ -8,33 +8,28 @@
     "
   >
     <div style="width: 1200px; margin: 0 auto">
-      
-      <!-- Título -->
-      <h1 style="font-size: 32px; font-weight: 700; margin-bottom: 20px;">
+      <h1 style="font-size: 32px; font-weight: 700; margin-bottom: 10px;">
         Mis Favoritos 💚
       </h1>
-
-      <!-- Si no hay usuario -->
+      <p
+        v-if="favoriteGames.length > 0"
+        style="margin-top: 0; margin-bottom: 20px; font-size: 16px; color: #555;"
+      >
+        Has marcado <strong>{{ favoriteGames.length }}</strong> juego<span v-if="favoriteGames.length !== 1">s</span> como favoritos.
+      </p>
       <div v-if="!currentUser" class="alert alert-warning">
         Debes iniciar sesión para ver tus favoritos.
       </div>
-
-      <!-- Cargando -->
       <div v-if="loading" class="alert alert-info">Cargando favoritos...</div>
-
-      <!-- Si no hay favoritos -->
       <div
-        v-if="!loading && favorites.length === 0"
+        v-if="!loading && currentUser && favoriteGames.length === 0"
         class="alert alert-secondary"
       >
         Aún no tienes videojuegos en favoritos.
       </div>
-
-      <!-- Lista de juegos favoritos -->
-      <div v-if="favorites.length > 0" class="favorite-list">
-
+      <div v-if="favoriteGames.length > 0" class="favorite-list">
         <div
-          v-for="game in favorites"
+          v-for="game in favoriteGames"
           :key="game.id"
           class="favorite-card"
           @click="goToGame(game.id)"
@@ -49,25 +44,35 @@
                   : ''
             "
           />
-
           <div class="info">
             <h2>{{ game.titulo }}</h2>
             <p style="margin: 0; font-size: 16px; color: grey;">
               ⭐ {{ game.calificacion }}
             </p>
-
             <p style="margin: 5px 0; font-weight: 600; font-size: 18px;">
               ${{ game.precio }} MXN
             </p>
-
-            <p style="margin-top: 8px; color: #73e900; font-weight: bold;">
-              Añadido a favoritos
+            <p style="margin-top: 4px; color: #73e900; font-weight: bold;">
+              En tu lista de favoritos
             </p>
+            <button
+              @click.stop="handleRemoveFavorite(game.id)"
+              style="
+                margin-top: 8px;
+                padding: 6px 12px;
+                background-color: #ff4444;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: 600;
+              "
+            >
+              Eliminar de favoritos
+            </button>
           </div>
         </div>
-
       </div>
-
     </div>
   </div>
 </template>
@@ -76,6 +81,7 @@
 import { mapState, mapActions } from "pinia";
 import { useFavoritesStore } from "../stores/favoritesStore";
 import { useUserStore } from "../stores/userStore";
+import { useGamesStore } from "../stores/gamesStore";
 
 export default {
   name: "FavoritesView",
@@ -83,10 +89,22 @@ export default {
   computed: {
     ...mapState(useFavoritesStore, ["favorites", "loading"]),
     ...mapState(useUserStore, ["currentUser"]),
+    ...mapState(useGamesStore, ["games"]),
+
+    favoriteGames() {
+      if (!this.favorites || !this.favorites.length || !this.games || !this.games.length) {
+        return [];
+      }
+
+      const favIds = this.favorites.map((f) => String(f.gameId));
+
+      return this.games.filter((g) => favIds.includes(String(g.id)));
+    },
   },
 
   methods: {
-    ...mapActions(useFavoritesStore, ["loadFavorites"]),
+    ...mapActions(useFavoritesStore, ["loadFavorites", "removeFavorite"]),
+    ...mapActions(useGamesStore, ["fetchGames"]),
 
     goToGame(id) {
       this.$router.push({ name: "game-detail", params: { id } });
@@ -102,16 +120,27 @@ export default {
       if (!url) return "";
       return url.startsWith("//") ? "https:" + url : url;
     },
+
+    async handleRemoveFavorite(gameId) {
+      try {
+        await this.removeFavorite(gameId);   
+        await this.loadFavorites();          
+      } catch (e) {
+        console.error("Error al eliminar favorito:", e);
+      }
+    },
   },
 
-  mounted() {
+  async mounted() {
     if (this.currentUser) {
-      this.loadFavorites();
+      await Promise.all([
+        this.fetchGames(),
+        this.loadFavorites(),
+      ]);
     }
   },
 };
 </script>
-
 
 <style scoped>
 .favorite-list {

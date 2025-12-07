@@ -743,7 +743,7 @@ export default {
       const idStr = String(gameId);
       const arr = Array.isArray(this.favoriteIds) ? this.favoriteIds : [];
       const result = arr.includes(idStr);
-      console.log("isFavorite? gameId:", gameId, "favoriteIds:", arr, "=>", result);
+      // console.log("isFavorite? gameId:", gameId, "favoriteIds:", arr, "=>", result);
       return result;
     },
 
