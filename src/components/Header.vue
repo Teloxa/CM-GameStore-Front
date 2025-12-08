@@ -201,17 +201,19 @@
               padding-left: 18px;"
           >
           </p>
-          <input 
+          <input
+            v-model="searchTerm"
+            @input="emitSearch"
             class="input-search"
             type="text"
             placeholder="Buscar"
             style="
-              border: 0px;
-              font-size: 16px;
-              padding-left: 7px;
-              width: 910px;
-              margin-right: 5px;"
-          >
+            border: 0px;
+            font-size: 16px;
+            padding-left: 7px;
+            width: 910px;
+            margin-right: 5px;"
+          />
         </div>
       </div>
     </div>
@@ -221,9 +223,16 @@
 <script>
 import { mapState, mapActions } from 'pinia';
 import { useUserStore } from "../stores/userStore";
+import { useSearchStore } from "../stores/searchStore";
 
 export default {
   name: 'Header.vue',
+
+  data() {
+    return {
+      searchTerm: ""   // lo que escribe el usuario en la barra
+    };
+  },
 
   computed: {
     ...mapState(useUserStore, ["currentUser"]),
@@ -231,6 +240,11 @@ export default {
 
   methods: {
     ...mapActions(useUserStore, ["logout", "loadFromStorage"]),
+
+    emitSearch() {
+      const searchStore = useSearchStore();
+      searchStore.setTerm(this.searchTerm);
+    },
 
     GoToLogin() {
       this.$router.push({path: '/Login'})

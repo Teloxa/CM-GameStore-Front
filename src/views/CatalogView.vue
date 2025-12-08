@@ -46,17 +46,19 @@
       <!-- Juegos principales -->
       <div
         style="
-          width: 100%;
-          height: 1160px;
-          overflow: hidden;
-          text-align: center;"
+        width: 100%;
+        height: 1160px;
+        overflow: hidden;
+        text-align: center;"
       >
-        <div
-          v-for="game in games"
-          :key="game.id"
-          class="game-card"
-          @click="goToGame(game.id)"
-        >
+      <div
+        v-for="game in filteredGames"
+        :key="game.id"
+        class="game-card"
+        @click="goToGame(game.id)"
+      >
+
+        
           <div class="game-card-inner">
             <img
               v-if="localImageUrl(game)"
@@ -215,11 +217,12 @@
           Mejor calificados
         </p>
         <div
-          v-for="game in topRatedGames"
+          v-for="game in filteredTopRatedGames"
           :key="game.id"
           class="game-card"
           @click="goToGame(game.id)"
         >
+
           <div class="game-card-inner">
             <img
               v-if="localImageUrl(game)"
@@ -663,6 +666,7 @@ import { mapState, mapActions } from 'pinia'
 import { useGamesStore } from '../stores/gamesStore.js'
 import { useUserStore } from '../stores/userStore.js'
 import { useFavoritesStore } from "../stores/favoritesStore.js";
+import { useSearchStore } from "../stores/searchStore.js";
 
 const PLATFORM_ICONS = {
   "PS5": "mdi mdi-sony-playstation",
@@ -687,22 +691,73 @@ export default {
   name: 'CatalogView',
 
   computed: {
-    ...mapState(useGamesStore, ['games', 'loading', 'error']),
-    ...mapState(useUserStore, ['currentUser']),
-    ...mapState(useFavoritesStore, ["favoriteIds"]), 
+  // juegos, loading, error
+  ...mapState(useGamesStore, ['games', 'loading', 'error']),
+  // usuario actual
+  ...mapState(useUserStore, ['currentUser']),
+  // ids de favoritos
+  ...mapState(useFavoritesStore, ["favoriteIds"]),
+  // ⬅️ texto que viene del buscador (searchStore.term)
+  ...mapState(useSearchStore, { searchTerm: 'term' }),
 
-    topRatedGames() {
-      if (!this.games || !this.games.length) return []
+  // TOP 10 mejor calificados (sin filtro)
+  topRatedGames() {
+    if (!this.games || !this.games.length) return []
 
-      return [...this.games]
-        .sort((a, b) => {
-          const ca = Number(a.calificacion) || 0
-          const cb = Number(b.calificacion) || 0
-          return cb - ca 
-        })
-        .slice(0, 10)
-    },
+    return [...this.games]
+      .sort((a, b) => {
+        const ca = Number(a.calificacion) || 0
+        const cb = Number(b.calificacion) || 0
+        return cb - ca 
+      })
+      .slice(0, 10)
   },
+
+  // Lista principal filtrada según lo que escribas en la barra
+  filteredGames() {
+    const term = (this.searchTerm || '').trim().toLowerCase()
+
+    // si la búsqueda está vacía, regresamos todos los juegos
+    if (!term) return this.games
+
+    return this.games.filter((game) => {
+      const titulo = (game.titulo || '').toLowerCase()
+      const plataformas = Array.isArray(game.plataformas)
+        ? game.plataformas.join(' ').toLowerCase()
+        : ''
+      const precio = String(game.precio || '')
+
+      return (
+        titulo.includes(term) ||
+        plataformas.includes(term) ||
+        precio.includes(term)
+      )
+    })
+  },
+
+  // Lista “Mejor calificados” pero también filtrada
+  filteredTopRatedGames() {
+    const term = (this.searchTerm || '').trim().toLowerCase()
+
+    const base = this.topRatedGames
+    if (!term) return base
+
+    return base.filter((game) => {
+      const titulo = (game.titulo || '').toLowerCase()
+      const plataformas = Array.isArray(game.plataformas)
+        ? game.plataformas.join(' ').toLowerCase()
+        : ''
+      const precio = String(game.precio || '')
+
+      return (
+        titulo.includes(term) ||
+        plataformas.includes(term) ||
+        precio.includes(term)
+      )
+    })
+  },
+},
+
 
   methods: {
     ...mapActions(useGamesStore, ['fetchGames']),
