@@ -67,10 +67,34 @@
         </button>
       </div>
       <!-- Carrito y favs -->
-      <button class="d-flex shop" style="margin-left: 130px;">
-        <p style="padding-top: 24px; font-size: 14px; color: #595959; margin-right: 10px; font-weight: 500;">Carrito</p>
-        <p class="mdi mdi-cart-outline" style="font-size: 22px; margin-top: -6px; padding-top: 24px; margin-right: 20px;"></p>
-      </button>
+      <router-link
+      to="/cart"
+      class="d-flex shop"
+     style="margin-left: 130px; text-decoration: none;"
+     >
+     <p
+      style="
+      padding-top: 24px;
+      font-size: 14px;
+      color: #595959;
+      margin-right: 10px;
+      font-weight: 500;
+    "
+  >
+    Carrito
+  </p>
+
+  <p
+    class="mdi mdi-cart-outline"
+    style="
+      font-size: 22px;
+      margin-top: -6px;
+      padding-top: 24px;
+      margin-right: 20px;
+    "
+    ></p>
+    </router-link>
+
       <button 
         class="d-flex shop" 
         @click="handleFavoritesClick"

@@ -5,6 +5,7 @@ import LoginView from '../views/LoginView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import GameDetailView from '../views/GameDetailView.vue'
 import FavoritesView from '@/views/FavoritesView.vue'
+import CartView from '../views/CartView.vue' 
 
 const routes = [
   {
@@ -34,6 +35,11 @@ const routes = [
     name: 'game-detail',
     component: GameDetailView,
     props: true
+  },
+  {
+    path: '/cart',
+    name: 'cart',
+    component: CartView
   },
   {
     path: '/Favorites',

@@ -23,6 +23,7 @@
       >
         Juegos Principales
       </p>
+
       <!-- Alerta, cargando... -->
       <div 
         v-if="loading" 
@@ -33,6 +34,7 @@
       >
         Cargando...
       </div>
+
       <!-- Alerta, no se pudo cargar-->
       <div 
         v-if="error" 
@@ -43,30 +45,32 @@
       >
         {{ error }}
       </div>
+
       <!-- Juegos principales -->
       <div
         style="
-        width: 100%;
-        height: 1160px;
-        overflow: hidden;
-        text-align: center;"
+          width: 100%;
+          height: 1160px;
+          overflow: hidden;
+          text-align: center;"
       >
-      <div
-        v-for="game in filteredGames"
-        :key="game.id"
-        class="game-card"
-        @click="goToGame(game.id)"
-      >
-
-        
+        <div
+          v-for="game in filteredGames"
+          :key="game.id"
+          class="game-card"
+          @click="goToGame(game.id)"
+        >
           <div class="game-card-inner">
             <img
               v-if="localImageUrl(game)"
               :src="localImageUrl(game)"
               alt="Screenshot local"
-              @error="$event.target.src = game.screenshots && game.screenshots.length
-                ? normalizeScreenshot(game.screenshots[0])
-                : ''"
+              @error="
+                $event.target.src =
+                  game.screenshots && game.screenshots.length
+                    ? normalizeScreenshot(game.screenshots[0])
+                    : ''
+              "
               class="game-image"
             />
             <div
@@ -75,6 +79,7 @@
             >
               ★ En favoritos
             </div>
+
             <div class="game-info">
               <!-- Título -->
               <div style="height: 64px;">
@@ -93,6 +98,7 @@
                   {{ game.titulo }}
                 </p>
               </div>
+
               <!-- Precio -->
               <div 
                 style="
@@ -117,6 +123,7 @@
                   {{ game.precio }}.00 MXN
                 </p>
               </div>
+
               <!-- Cuenta favoritos -->
               <div
                 class="d-flex"
@@ -135,6 +142,7 @@
                   {{ game.favoritosCount }}
                 </p>
               </div>
+
               <!-- Plataformas -->
               <div style="background-color: rgba(115, 233, 0, 0.5); padding: 3px 5px;">
                 <i
@@ -147,6 +155,7 @@
                     color: grey;"
                 ></i>
               </div>
+
               <!-- Botones -->
               <div class="game-actions">
                 <!-- Botón carrito -->
@@ -195,6 +204,7 @@
           </div>
         </div>
       </div>
+
       <!-- Juegos mejor calificados -->
       <div
         style="
@@ -216,21 +226,24 @@
         >
           Mejor calificados
         </p>
+
         <div
           v-for="game in filteredTopRatedGames"
           :key="game.id"
           class="game-card"
           @click="goToGame(game.id)"
         >
-
           <div class="game-card-inner">
             <img
               v-if="localImageUrl(game)"
               :src="localImageUrl(game)"
               alt="Screenshot local"
-              @error="$event.target.src = game.screenshots && game.screenshots.length
-                ? normalizeScreenshot(game.screenshots[0])
-                : ''"
+              @error="
+                $event.target.src =
+                  game.screenshots && game.screenshots.length
+                    ? normalizeScreenshot(game.screenshots[0])
+                    : ''
+              "
               class="game-image"
             />
             <div
@@ -239,6 +252,7 @@
             >
               ★ En favoritos
             </div>
+
             <div class="game-info">
               <!-- Título -->
               <div style="height: 64px;">
@@ -257,6 +271,7 @@
                   {{ game.titulo }}
                 </p>
               </div>
+
               <!-- Precio -->
               <div 
                 style="
@@ -281,6 +296,7 @@
                   {{ game.precio }}.00 MXN
                 </p>
               </div>
+
               <!-- Cuenta favoritos -->
               <div
                 class="d-flex"
@@ -299,6 +315,7 @@
                   {{ game.favoritosCount }}
                 </p>
               </div>
+
               <!-- Plataformas -->
               <div style="background-color: rgba(115, 233, 0, 0.5); padding: 3px 5px;">
                 <i
@@ -311,6 +328,7 @@
                     color: grey;"
                 ></i>
               </div>
+
               <!-- Botones -->
               <div class="game-actions">
                 <!-- Botón carrito -->
@@ -359,6 +377,7 @@
           </div>
         </div>
       </div>
+
       <!-- Suscripciones -->
       <div
         style="
@@ -381,10 +400,9 @@
         >
           Suscripciones
         </p>
+
         <!-- Suscripcion 1 -->
-        <button
-          class="suscripcion-card"
-        >
+        <button class="suscripcion-card">
           <div class="suscripcion-card-inner">
             <img
               alt="Screenshot local"
@@ -392,7 +410,6 @@
               src="/imgs/amazon.jpg"
             />
             <div class="suscripcion-info">
-              <!-- Título -->
               <div style="height: 40px;">
                 <p
                   style="
@@ -409,7 +426,6 @@
                   Amazon
                 </p>
               </div>
-              <!-- Precio -->
               <div 
                 style="
                   width: 100%; 
@@ -436,10 +452,9 @@
             </div>
           </div>
         </button>
+
         <!-- Suscripcion 2 -->
-        <button
-          class="suscripcion-card"
-        >
+        <button class="suscripcion-card">
           <div class="suscripcion-card-inner">
             <img
               alt="Screenshot local"
@@ -447,7 +462,6 @@
               src="/imgs/netflix.jpg"
             />
             <div class="suscripcion-info">
-              <!-- Título -->
               <div style="height: 40px;">
                 <p
                   style="
@@ -464,7 +478,6 @@
                   Netflix
                 </p>
               </div>
-              <!-- Precio -->
               <div 
                 style="
                   width: 100%; 
@@ -491,10 +504,9 @@
             </div>
           </div>
         </button>
+
         <!-- Suscripcion 3 -->
-        <button
-          class="suscripcion-card"
-        >
+        <button class="suscripcion-card">
           <div class="suscripcion-card-inner">
             <img
               alt="Screenshot local"
@@ -502,7 +514,6 @@
               src="/imgs/apple.jpg"
             />
             <div class="suscripcion-info">
-              <!-- Título -->
               <div style="height: 40px;">
                 <p
                   style="
@@ -519,7 +530,6 @@
                   iTunes
                 </p>
               </div>
-              <!-- Precio -->
               <div 
                 style="
                   width: 100%; 
@@ -546,10 +556,9 @@
             </div>
           </div>
         </button>
+
         <!-- Suscripcion 4 -->
-        <button
-          class="suscripcion-card"
-        >
+        <button class="suscripcion-card">
           <div class="suscripcion-card-inner">
             <img
               alt="Screenshot local"
@@ -557,7 +566,6 @@
               src="/imgs/spotify.jpg"
             />
             <div class="suscripcion-info">
-              <!-- Título -->
               <div style="height: 40px;">
                 <p
                   style="
@@ -574,7 +582,6 @@
                   Spotify
                 </p>
               </div>
-              <!-- Precio -->
               <div 
                 style="
                   width: 100%; 
@@ -601,10 +608,9 @@
             </div>
           </div>
         </button>
+
         <!-- Suscripcion 5 -->
-        <button
-          class="suscripcion-card"
-        >
+        <button class="suscripcion-card">
           <div class="suscripcion-card-inner">
             <img
               alt="Screenshot local"
@@ -612,7 +618,6 @@
               src="/imgs/discord.jpg"
             />
             <div class="suscripcion-info">
-              <!-- Título -->
               <div style="height: 40px;">
                 <p
                   style="
@@ -629,7 +634,6 @@
                   Discord Nitro
                 </p>
               </div>
-              <!-- Precio -->
               <div 
                 style="
                   width: 100%; 
@@ -665,108 +669,107 @@
 import { mapState, mapActions } from 'pinia'
 import { useGamesStore } from '../stores/gamesStore.js'
 import { useUserStore } from '../stores/userStore.js'
-import { useFavoritesStore } from "../stores/favoritesStore.js";
-import { useSearchStore } from "../stores/searchStore.js";
+import { useFavoritesStore } from '../stores/favoritesStore.js'
+import { useSearchStore } from '../stores/searchStore.js'
+import { useCartStore } from '../stores/cartStore.js'
 
 const PLATFORM_ICONS = {
-  "PS5": "mdi mdi-sony-playstation",
-  "PS4": "mdi mdi-sony-playstation",
-  "PS3": "mdi mdi-sony-playstation",
-  "PS2": "mdi mdi-sony-playstation",
-  "XBOX": "mdi mdi-microsoft-xbox",
-  "Xbox 360": "mdi mdi-microsoft-xbox",
-  "Xbox One": "mdi mdi-microsoft-xbox",
-  "Xbox Series S/X": "mdi mdi-microsoft-xbox",
-  "Nintendo Switch": "mdi mdi-nintendo-switch",
-  "Nintendo Switch 2": "mdi mdi-nintendo-switch",
-  "Wii": "mdi mdi-nintendo-wii",
-  "Wii U": "mdi mdi-nintendo-wiiu",
-  "PC": "mdi mdi-laptop",
-  "Windows": "mdi mdi-microsoft-windows",
-  "Linux": "mdi mdi-linux",
-  "Steam": "mdi mdi-steam"
+  PS5: 'mdi mdi-sony-playstation',
+  PS4: 'mdi mdi-sony-playstation',
+  PS3: 'mdi mdi-sony-playstation',
+  PS2: 'mdi mdi-sony-playstation',
+  XBOX: 'mdi mdi-microsoft-xbox',
+  'Xbox 360': 'mdi mdi-microsoft-xbox',
+  'Xbox One': 'mdi mdi-microsoft-xbox',
+  'Xbox Series S/X': 'mdi mdi-microsoft-xbox',
+  'Nintendo Switch': 'mdi mdi-nintendo-switch',
+  'Nintendo Switch 2': 'mdi mdi-nintendo-switch',
+  Wii: 'mdi mdi-nintendo-wii',
+  'Wii U': 'mdi mdi-nintendo-wiiu',
+  PC: 'mdi mdi-laptop',
+  Windows: 'mdi mdi-microsoft-windows',
+  Linux: 'mdi mdi-linux',
+  Steam: 'mdi mdi-steam'
 }
 
 export default {
   name: 'CatalogView',
 
   computed: {
-  // juegos, loading, error
-  ...mapState(useGamesStore, ['games', 'loading', 'error']),
-  // usuario actual
-  ...mapState(useUserStore, ['currentUser']),
-  // ids de favoritos
-  ...mapState(useFavoritesStore, ["favoriteIds"]),
-  // ⬅️ texto que viene del buscador (searchStore.term)
-  ...mapState(useSearchStore, { searchTerm: 'term' }),
+    // juegos, loading, error
+    ...mapState(useGamesStore, ['games', 'loading', 'error']),
+    // usuario actual
+    ...mapState(useUserStore, ['currentUser']),
+    // ids de favoritos
+    ...mapState(useFavoritesStore, ['favoriteIds']),
+    // texto que viene del buscador
+    ...mapState(useSearchStore, { searchTerm: 'term' }),
 
-  // TOP 10 mejor calificados (sin filtro)
-  topRatedGames() {
-    if (!this.games || !this.games.length) return []
+    // TOP 10 mejor calificados (sin filtro)
+    topRatedGames() {
+      if (!this.games || !this.games.length) return []
 
-    return [...this.games]
-      .sort((a, b) => {
-        const ca = Number(a.calificacion) || 0
-        const cb = Number(b.calificacion) || 0
-        return cb - ca 
+      return [...this.games]
+        .sort((a, b) => {
+          const ca = Number(a.calificacion) || 0
+          const cb = Number(b.calificacion) || 0
+          return cb - ca
+        })
+        .slice(0, 10)
+    },
+
+    // Lista principal filtrada
+    filteredGames() {
+      const term = (this.searchTerm || '').trim().toLowerCase()
+
+      if (!term) return this.games
+
+      return this.games.filter((game) => {
+        const titulo = (game.titulo || '').toLowerCase()
+        const plataformas = Array.isArray(game.plataformas)
+          ? game.plataformas.join(' ').toLowerCase()
+          : ''
+        const precio = String(game.precio || '')
+
+        return (
+          titulo.includes(term) ||
+          plataformas.includes(term) ||
+          precio.includes(term)
+        )
       })
-      .slice(0, 10)
+    },
+
+    // Lista “Mejor calificados” filtrada
+    filteredTopRatedGames() {
+      const term = (this.searchTerm || '').trim().toLowerCase()
+      const base = this.topRatedGames
+
+      if (!term) return base
+
+      return base.filter((game) => {
+        const titulo = (game.titulo || '').toLowerCase()
+        const plataformas = Array.isArray(game.plataformas)
+          ? game.plataformas.join(' ').toLowerCase()
+          : ''
+        const precio = String(game.precio || '')
+
+        return (
+          titulo.includes(term) ||
+          plataformas.includes(term) ||
+          precio.includes(term)
+        )
+      })
+    }
   },
-
-  // Lista principal filtrada según lo que escribas en la barra
-  filteredGames() {
-    const term = (this.searchTerm || '').trim().toLowerCase()
-
-    // si la búsqueda está vacía, regresamos todos los juegos
-    if (!term) return this.games
-
-    return this.games.filter((game) => {
-      const titulo = (game.titulo || '').toLowerCase()
-      const plataformas = Array.isArray(game.plataformas)
-        ? game.plataformas.join(' ').toLowerCase()
-        : ''
-      const precio = String(game.precio || '')
-
-      return (
-        titulo.includes(term) ||
-        plataformas.includes(term) ||
-        precio.includes(term)
-      )
-    })
-  },
-
-  // Lista “Mejor calificados” pero también filtrada
-  filteredTopRatedGames() {
-    const term = (this.searchTerm || '').trim().toLowerCase()
-
-    const base = this.topRatedGames
-    if (!term) return base
-
-    return base.filter((game) => {
-      const titulo = (game.titulo || '').toLowerCase()
-      const plataformas = Array.isArray(game.plataformas)
-        ? game.plataformas.join(' ').toLowerCase()
-        : ''
-      const precio = String(game.precio || '')
-
-      return (
-        titulo.includes(term) ||
-        plataformas.includes(term) ||
-        precio.includes(term)
-      )
-    })
-  },
-},
-
 
   methods: {
     ...mapActions(useGamesStore, ['fetchGames']),
-    ...mapActions(useFavoritesStore, ["loadFavorites", "addFavorite"]),
+    ...mapActions(useFavoritesStore, ['loadFavorites', 'addFavorite']),
 
-    normalizeScreenshot(url) {
-      if (!url) return ''
-      if (url.startsWith('//')) return 'https:' + url
-      return url
+    normalizeScreenshot(rawUrl) {
+      if (!rawUrl) return ''
+      if (rawUrl.startsWith('//')) return 'https:' + rawUrl
+      return rawUrl
     },
 
     localImageUrl(game) {
@@ -775,12 +778,12 @@ export default {
     },
 
     platformIconClasses(game) {
-      if (!game.plataformas) return []
+      if (!game || !Array.isArray(game.plataformas)) return []
 
       const uniqueClasses = new Set()
 
-      game.plataformas.forEach(p => {
-        const iconClass = PLATFORM_ICONS[p]
+      game.plataformas.forEach((platform) => {
+        const iconClass = PLATFORM_ICONS[platform]
         if (iconClass) {
           uniqueClasses.add(iconClass)
         }
@@ -795,11 +798,9 @@ export default {
     },
 
     isFavorite(gameId) {
-      const idStr = String(gameId);
-      const arr = Array.isArray(this.favoriteIds) ? this.favoriteIds : [];
-      const result = arr.includes(idStr);
-      // console.log("isFavorite? gameId:", gameId, "favoriteIds:", arr, "=>", result);
-      return result;
+      const idStr = String(gameId)
+      const arr = Array.isArray(this.favoriteIds) ? this.favoriteIds : []
+      return arr.includes(idStr)
     },
 
     async handleAddFavorite(game) {
@@ -807,18 +808,18 @@ export default {
 
       if (!this.currentUser) {
         console.log('No hay usuario, redirigiendo a login')
-        this.$router.push({ name: "login" });
-        window.scrollTo({ top: 0, behavior: "auto" });
-        return;
+        this.$router.push({ name: 'login' })
+        window.scrollTo({ top: 0, behavior: 'auto' })
+        return
       }
 
       if (this.isFavorite(game.id)) {
         console.log('Ya está en favoritos, no hago nada')
-        return;
+        return
       }
 
       try {
-        await this.addFavorite(game);  
+        await this.addFavorite(game)
         console.log('Juego agregado a favoritos en store')
       } catch (e) {
         console.error('Error en handleAddFavorite:', e)
@@ -826,19 +827,28 @@ export default {
     },
 
     handleAddToCart(game) {
-      console.log("Agregar al carrito:", game.titulo);
-    },
+        const cartStore = useCartStore();
+        cartStore.addToCart(game);
+
+        console.log("Agregado al carrito:", game.titulo);
+
+      if (window.$toast && typeof window.$toast.show === "function") {
+      window.$toast.show(`"${game.titulo}" agregado al carrito`);
+     } else {
+     console.warn("Toast no disponible", window.$toast);
+     }
+   }
   },
 
   async mounted() {
-    this.fetchGames();
+    await this.fetchGames()
 
     if (this.currentUser) {
-      await this.loadFavorites();
+      await this.loadFavorites()
       console.log('Favoritos cargados en mounted Catalog:', this.favoriteIds)
     }
-  },
-};
+  }
+}
 </script>
 
 <style>
@@ -853,7 +863,7 @@ export default {
   border: none;
   background: transparent;
   position: relative;
-  overflow: hidden;          
+  overflow: hidden;
   cursor: pointer;
 }
 
@@ -923,7 +933,7 @@ export default {
   border: none;
   background: transparent;
   position: relative;
-  overflow: hidden;          
+  overflow: hidden;
   cursor: pointer;
 }
 
@@ -959,8 +969,7 @@ export default {
   font-weight: 700;
   padding: 4px 40px;
   transform: rotate(-20deg);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   z-index: 2;
 }
-
 </style>
